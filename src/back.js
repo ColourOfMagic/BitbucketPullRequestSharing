@@ -1,6 +1,6 @@
 setTimeout(
     function () {
-        let block = findPullRequestsBlock();
+        let block = findOverviewPullRequestsBlock();
         addFloatButton(block);
     }, 100);
 
@@ -10,11 +10,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 });
 
-function findPullRequestsBlock() {
+function findOverviewPullRequestsBlock() {
     let contentBlock = document.querySelector('div[data-testid="Content"]');
-    if (contentBlock) {
-        const blocks = getChildBlocks(contentBlock);
-        return blocks.find(isPullRequestNode);
+    let finalChildBlock = getFinalChildBlock(contentBlock);
+    if (finalChildBlock) {
+        return finalChildBlock.find(isPullRequestNode);
     } else {
         return null;
     }
@@ -29,10 +29,11 @@ function getElementByXpath(path, node) {
     return document.evaluate(path, node, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 }
 
-function getChildBlocks(page) {
+function getFinalChildBlock(page) {
     let tempNode = page;
     while (tempNode.childNodes.length <= 2) {
         tempNode = tempNode.childNodes[0];
+        if (tempNode === undefined) return null;
     }
     return Object.values(tempNode.childNodes);
 }
@@ -65,9 +66,8 @@ function getLinkTextTypeAndCopyToClipboard() {
 }
 
 function copyToClipboard(linkTextType) {
-    let block = findPullRequestsBlock();
-    if (block) {
-        let links = getLinks(block);
+    let links = findLinks();
+    if (links !== undefined && links.length > 0) {
         let finalText = createFinalText(links, linkTextType).innerHTML;
 
         function listener(e) {
@@ -82,7 +82,21 @@ function copyToClipboard(linkTextType) {
     }
 }
 
-function getLinks(block) {
+function findLinks() {
+    let overviewBlock = findOverviewPullRequestsBlock()
+    if (overviewBlock) {
+        return getOverviewBlockLinks(overviewBlock);
+    } else {
+        return findLinksFromPullRequestsPage();
+    }
+}
+
+function findLinksFromPullRequestsPage() {
+    let tableBlock = getElementByXpath("div/table/tbody", document.getElementById("pullrequests"));
+    return tableBlock.getElementsByClassName("execute");
+}
+
+function getOverviewBlockLinks(block) {
     let tbody = getElementByXpath("div/table/tbody", block);
     if (tbody) {
         let linksCount = tbody.childNodes.length
@@ -115,7 +129,7 @@ const bitbucketProjectPrefixRegex = /https:\/\/bitbucket.org\/[^/]+\//
 function createTextLinkElement(link, linkTextType) {
     let linkElement = document.createElement("a");
     if (linkTextType == 'pullRequestName') {
-        linkElement.innerText = link.innerText;
+        linkElement.innerText = getPullRequestName(link);
     } else if (linkTextType == 'repositoryName') {
         linkElement.innerText = buildRepositoryName(link.href);
     } else if (linkTextType == 'repositoryAndPullRequest') {
@@ -125,6 +139,14 @@ function createTextLinkElement(link, linkTextType) {
     }
     linkElement.href = link.href;
     return linkElement
+}
+
+function getPullRequestName(link) {
+    if (link.title !== "") {
+        return link.title;
+    } else {
+        return link.innerText;
+    }
 }
 
 function buildRepositoryName(url) {

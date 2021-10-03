@@ -1,7 +1,7 @@
 {
   "name": "Check PR",
   "description": "Copies pull request links from bitbucket page.",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "browser_action": {
     "default_popup": "popup.html",
     "default_icon": "check-pr-copy.png"
@@ -31,7 +31,8 @@
   "content_scripts": [
     {
       "matches": [
-        "https://bitbucket.org/dashboard/overview"
+        "https://bitbucket.org/dashboard/overview",
+        "https://bitbucket.org/dashboard/pullrequests*"
       ],
       "js": [
         "back.js"
