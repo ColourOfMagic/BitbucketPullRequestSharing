@@ -1,0 +1,52 @@
+{
+  "name": "Check PR",
+  "description": "Copies pull request links from bitbucket page.",
+  "version": "1.3",
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": "check-pr-copy.png"
+  },
+  "manifest_version": 2,
+  "icons": {
+    "128": "copy128px.png"
+  },
+  "commands": {
+    "copy_prs": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+V",
+        "mac": "MacCtrl+Shift+V"
+      },
+      "description": "Copy pull requests from the page"
+    }
+  },
+  "web_accessible_resources": [
+    "check-pr-copy.png"
+  ],
+  "background": {
+    "scripts": [
+      "popup.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://bitbucket.org/dashboard/overview"
+      ],
+      "js": [
+        "back.js"
+      ],
+      "css": [
+        "floatBtn.css"
+      ]
+    }
+  ],
+  "permissions": [
+    "clipboardWrite",
+    "storage"
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  }
+}
