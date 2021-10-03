@@ -1,7 +1,7 @@
 {
   "name": "Check PR",
   "description": "Copies pull request links from bitbucket page.",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "browser_action": {
     "default_popup": "popup.html",
     "default_icon": "check-pr-copy.png"
