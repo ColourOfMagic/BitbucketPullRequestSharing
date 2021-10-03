@@ -6,7 +6,7 @@ function save_options() {
   }, function() {
     // Update status to let user know options were saved.
     const status = document.getElementById('status');
-    status.TextTypeContent = 'Options saved.';
+    status.innerText = 'Options saved.';
   });
 }
 
