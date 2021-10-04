@@ -8,9 +8,10 @@ if [[ version == "" ]]; then
 fi
 
 mkdir -p \build
+cd src
 
 archive_name="check-pr-v$version.zip"
 
-zip -r -j ./build/"$archive_name" src/*
+zip -r ../build/"$archive_name" *
 
 echo "Success! - $archive_name"
