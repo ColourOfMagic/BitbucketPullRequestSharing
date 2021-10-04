@@ -1,10 +1,10 @@
 {
   "name": "Check PR",
   "description": "Copies pull request links from bitbucket page.",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "browser_action": {
     "default_popup": "popup.html",
-    "default_icon": "check-pr-copy.png"
+    "default_icon": "copy128px.png"
   },
   "manifest_version": 2,
   "icons": {
@@ -19,9 +19,6 @@
       "description": "Copy pull requests from the page"
     }
   },
-  "web_accessible_resources": [
-    "check-pr-copy.png"
-  ],
   "background": {
     "scripts": [
       "shortcut.js"
@@ -38,9 +35,6 @@
         "script/processing.js",
         "script/message-generator.js",
         "script/background.js"
-      ],
-      "css": [
-        "floatBtn.css"
       ]
     }
   ],
