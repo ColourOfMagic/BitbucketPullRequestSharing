@@ -68,7 +68,14 @@ function convertLinksFromOverview(links) {
 }
 
 function convertLinksFromPullRequest(links) {
-  return Array.from(links, link => createMessageLink(link.title, link.href));
+  return Array.from(links, link => createMessageLink(getPullRequestName(link.title), link.href));
+}
+
+const prefixIndent = 2;
+const pullRequestNumberDivider = ':';
+
+function getPullRequestName(title) {
+  return title.substring(title.indexOf(pullRequestNumberDivider) + prefixIndent);
 }
 
 function createMessageLink(title, link) {
