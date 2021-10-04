@@ -1,7 +1,7 @@
 {
   "name": "Check PR",
   "description": "Copies pull request links from bitbucket page.",
-  "version": "1.4.5",
+  "version": "1.5.0",
   "browser_action": {
     "default_popup": "popup.html",
     "default_icon": "check-pr-copy.png"
@@ -24,7 +24,7 @@
   ],
   "background": {
     "scripts": [
-      "popup.js"
+      "shortcut.js"
     ],
     "persistent": true
   },
@@ -47,9 +47,5 @@
   "permissions": [
     "clipboardWrite",
     "storage"
-  ],
-  "options_ui": {
-    "page": "options.html",
-    "open_in_tab": false
-  }
+  ]
 }
