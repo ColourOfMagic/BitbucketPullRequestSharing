@@ -15,5 +15,5 @@ archive in assets).
 The project does not use minification or obfuscation.  
 Extension loaded without post-processing by adding the "src" folder to [chrome://extensions](chrome://extensions) "Load
 unpacked extension".  
-Project uses [SemVer](https://semver.org/) and [keep a changelog](https://keepachangelog.com/) for git
+Project uses [SemVer](https://semver.org/) and [conventional commits](https://www.conventionalcommits.org/) for git
 and [Google JavaScript Style Guide](https://google.github.io/styleguide/jsguide.html) for code.
